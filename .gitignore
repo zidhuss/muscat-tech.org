@@ -3,3 +3,7 @@
 /public
 
 .hugo_build.lock
+
+/public
+/result
+node_modules
