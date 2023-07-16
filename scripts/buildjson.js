@@ -53,7 +53,7 @@ async function generateCalendar() {
             });
 
             // Extract the year and month from the event date
-            const eventDate = new Date(eventData.date);
+            const eventDate = new Date(eventData.startTime);
             const year = eventDate.getFullYear();
             const month = String(eventDate.getMonth() + 1).padStart(2, '0');
 
