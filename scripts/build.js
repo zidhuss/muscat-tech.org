@@ -2,6 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const matter = require("gray-matter"); // For parsing the front-matter
 const yup = require("yup");
+const ical = require("ical-generator").default;
 
 // Filter _index.md files
 const notIndexFile = (file) => file !== "_index.md";
@@ -36,6 +37,10 @@ async function generateCalendar() {
   try {
     const events = {};
     const validations = [];
+    const allEventsCalendar = ical({
+      domain: "muscat-tech.org",
+    });
+    const generateIcs = icsEventGenerator(allEventsCalendar);
 
     fs.readdirSync(eventsDir)
       .filter(notIndexFile)
@@ -47,6 +52,7 @@ async function generateCalendar() {
             // Read each event file
             const filePath = path.join(groupDir, file);
             const fileContent = fs.readFileSync(filePath, "utf8");
+            const relativePath = path.relative(eventsDir, filePath);
 
             // Parse the event data
             const eventData = { ...matter(fileContent).data, group };
@@ -65,7 +71,7 @@ async function generateCalendar() {
             });
             validations.push({
               promise: validationPromise,
-              file: filePath,
+              file: relativePath,
             });
 
             // Construct the key for the event data
@@ -91,6 +97,10 @@ async function generateCalendar() {
             "\n\t",
           )}`,
         );
+      } else {
+        // Passed the validation
+        const eventData = result.value;
+        generateIcs(eventData, validations[index].file);
       }
     });
 
@@ -109,6 +119,10 @@ async function generateCalendar() {
       fs.writeFileSync(outputFilePath, JSON.stringify(value, null, 2));
     });
 
+    // Write the global calendar
+    const outputICSFile = path.join(outputDir, "all.ics");
+    allEventsCalendar.saveSync(outputICSFile);
+
     console.log("Created event json files successfully!");
   } catch (error) {
     console.error(
@@ -119,3 +133,27 @@ async function generateCalendar() {
 }
 
 generateCalendar();
+
+function icsEventGenerator(allEventsCalendar) {
+  return function (eventData, id) {
+    const eventObject = {
+      start: new Date(eventData.date),
+      end: new Date(eventData.endDate),
+      summary: `${eventData.group} - ${eventData.name}`,
+      description: eventData.description,
+      location: eventData.location,
+      url: eventData.detailsUrl,
+      organizer: {
+        name: eventData.group,
+      },
+      class: "PUBLIC",
+      id,
+    };
+    allEventsCalendar.createEvent(eventObject);
+
+    // TODO: Create individual ics files
+    writeEventIcs();
+  };
+}
+
+function writeEventIcs() {}

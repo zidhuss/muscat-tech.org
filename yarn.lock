@@ -31,6 +31,13 @@ gray-matter@^4.0.3:
     section-matter "^1.0.0"
     strip-bom-string "^1.0.0"
 
+ical-generator@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/ical-generator/-/ical-generator-5.0.0.tgz#89ffea7550d4f5cc034789718395ed638693f76f"
+  integrity sha512-o0klZ3J0IOAD5VitK2bNVBPSrSPEe+uglCk9zBa2MSYbKxPvjWlHjbaZaNWWC8MOqpkNBF+viteFExyjt1S5XQ==
+  dependencies:
+    uuid-random "^1.3.2"
+
 is-extendable@^0.1.0:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/is-extendable/-/is-extendable-0.1.1.tgz#62b110e289a471418e3ec36a617d472e301dfc89"
@@ -103,6 +110,11 @@ ulid@^2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/ulid/-/ulid-2.3.0.tgz#93063522771a9774121a84d126ecd3eb9804071f"
   integrity sha512-keqHubrlpvT6G2wH0OEfSW4mquYRcbe/J8NMmveoQOjUqmo+hXtO+ORCpWhdbZ7k72UtY61BL7haGxW6enBnjw==
+
+uuid-random@^1.3.2:
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/uuid-random/-/uuid-random-1.3.2.tgz#96715edbaef4e84b1dcf5024b00d16f30220e2d0"
+  integrity sha512-UOzej0Le/UgkbWEO8flm+0y+G+ljUon1QWTEZOq1rnMAsxo2+SckbiZdKzAHHlVh6gJqI1TjC/xwgR50MuCrBQ==
 
 yup@^1.2.0:
   version "1.2.0"

@@ -6,10 +6,11 @@
   "author": "Hussein Al Abry <hussein@zidhuss.tech>",
   "private": true,
   "scripts": {
-    "buildjson": "node scripts/buildjson.js"
+    "build": "node scripts/build.js"
   },
   "devDependencies": {
     "gray-matter": "^4.0.3",
+    "ical-generator": "^5.0.0",
     "prettier": "^3.0.0",
     "prettier-plugin-go-template": "^0.0.13",
     "yup": "^1.2.0"
