@@ -7,6 +7,6 @@ theme= 'muscat-tech'
 
 [permalinks]
   [permalinks.page]
-    events = '/groups/:sections[last]/events/:year/:month/:slug/'
+    events = '/groups/:sections[last]/events/:year/:month/:slugorfilename/'
   [permalinks.section]
     events = '/groups/:sections[last]/'

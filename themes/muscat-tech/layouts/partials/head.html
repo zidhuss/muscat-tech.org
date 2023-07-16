@@ -1,0 +1,54 @@
+<head>
+  {{- if .IsHome -}}
+  <script src="/js/fullcalendar.min.js"></script>
+  <script src="/js/fullcalendar-daygrid.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var calendarEl = document.getElementById("calendar");
+      var calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: "dayGridMonth",
+        events: function (fetchInfo, successCallback, failureCallback) {
+          var startStr = fetchInfo.startStr; // This is the start date currently being viewed
+          var endStr = fetchInfo.endStr; // This is the end date currently being viewed
+
+          // Convert to year-month format to match JSON files
+          var startYearMonth = startStr.slice(0, 7);
+          var endYearMonth = endStr.slice(0, 7);
+
+          // Prepare promises to fetch event data for all months in the range
+          var promises = [];
+          for (
+            var date = new Date(startYearMonth);
+            date <= new Date(endYearMonth);
+            date.setMonth(date.getMonth() + 1)
+          ) {
+            var yearMonth = date.toISOString().slice(0, 7);
+            promises.push(
+              fetch("/events/" + yearMonth + ".json")
+                .then((res) => res.json())
+                .catch(() => []),
+            );
+          }
+
+          // Fetch all event data and flatten into a single array
+          Promise.all(promises)
+            .then((dataArrays) => dataArrays.flat())
+            .then((events) => {
+              // Transform events to FullCalendar Event Object format
+              var fullCalendarEvents = events.map((event) => ({
+                title: `${event.group} - ${event.name}`,
+                start: event.date,
+                end: event.endDate,
+                url: event.eventUrl,
+              }));
+              console.log(events, fullCalendarEvents);
+              successCallback(fullCalendarEvents);
+            })
+            .catch(failureCallback);
+        },
+      });
+      calendar.render();
+    });
+  </script>
+  {{- end -}}
+</head>

@@ -1,27 +1,32 @@
-const fs = require('fs');
-const path = require('path');
-const matter = require('gray-matter'); // For parsing the front-matter
-const yup = require('yup');
+const fs = require("fs");
+const path = require("path");
+const matter = require("gray-matter"); // For parsing the front-matter
+const yup = require("yup");
 
 // Filter _index.md files
-const notIndexFile = (file) => file !== '_index.md';
+const notIndexFile = (file) => file !== "_index.md";
 
 // Input & output directories
-const eventsDir = path.join(__dirname, '..', 'content', 'events');
-const outputDir = path.join(__dirname, '..', 'public', 'events');
+const eventsDir = path.join(__dirname, "..", "content", "events");
+const outputDir = path.join(__dirname, "..", "public", "events");
 
 const eventSchema = yup.object().shape({
-  name: yup.string().required('Event name is a required field.'),
-  description: yup.string().required('Event description is a required field.'),
-  startTime: yup.date().required('Event start time is a required field.'),
-  endTime: yup.date().required('Event end time is a required field.'),
-  location: yup.string().required('Event location is a required field.'),
-  detailsUrl: yup.string().url('Details URL must be a valid URL.').required('Details URL is a required field.'),
-  promotionalImage: yup.string().url('Promotional image URL must be a valid URL.'),
+  name: yup.string().required("Event name is a required field."),
+  description: yup.string().required("Event description is a required field."),
+  date: yup.date().required("Event start time is a required field."),
+  endDate: yup.date().required("Event end time is a required field."),
+  location: yup.string().required("Event location is a required field."),
+  detailsUrl: yup
+    .string()
+    .url("Details URL must be a valid URL.")
+    .required("Details URL is a required field."),
+  promotionalImage: yup
+    .string()
+    .url("Promotional image URL must be a valid URL."),
   allDay: yup.bool(),
-  group: yup.string().required('Event group is a required field.'),
-  eventUrl: yup.string().url('Event URL must be a valid URL.'),
-  registrationUrl: yup.string().url('Registration URL must be a valid URL.'),
+  group: yup.string().required("Event group is a required field."),
+  eventUrl: yup.string().required(),
+  registrationUrl: yup.string().url("Registration URL must be a valid URL."),
   tags: yup.array().of(yup.string()),
   pricing: yup.string(),
   isOnline: yup.bool(),
@@ -41,21 +46,27 @@ async function generateCalendar() {
           .forEach((file) => {
             // Read each event file
             const filePath = path.join(groupDir, file);
-            const fileContent = fs.readFileSync(filePath, 'utf8');
+            const fileContent = fs.readFileSync(filePath, "utf8");
 
             // Parse the event data
             const eventData = { ...matter(fileContent).data, group };
 
-            const validationPromise = eventSchema.validate(eventData, { abortEarly: false });
+            // Extract the year and month from the event date
+            const eventDate = new Date(eventData.date);
+            const year = eventDate.getFullYear();
+            const month = String(eventDate.getMonth() + 1).padStart(2, "0");
+
+            eventData.eventUrl = `groups/${group}/events/${year}/${month}/${
+              eventData.slug ?? path.parse(file).name
+            }/`;
+
+            const validationPromise = eventSchema.validate(eventData, {
+              abortEarly: false,
+            });
             validations.push({
               promise: validationPromise,
               file: filePath,
             });
-
-            // Extract the year and month from the event date
-            const eventDate = new Date(eventData.startTime);
-            const year = eventDate.getFullYear();
-            const month = String(eventDate.getMonth() + 1).padStart(2, '0');
 
             // Construct the key for the event data
             const key = `${year}-${month}`;
@@ -69,18 +80,22 @@ async function generateCalendar() {
       });
 
     // Run validations
-    const results = await Promise.allSettled(validations.map(v => v.promise));
+    const results = await Promise.allSettled(validations.map((v) => v.promise));
 
     let hasError = false;
     results.forEach((result, index) => {
-      if (result.status === 'rejected') {
+      if (result.status === "rejected") {
         hasError = true;
-        console.error(`Error in ${validations[index].file}:\n\t${result.reason.errors.join('\n\t')}`);
+        console.error(
+          `Error in ${validations[index].file}:\n\t${result.reason.errors.join(
+            "\n\t",
+          )}`,
+        );
       }
     });
 
     if (hasError) {
-      throw new Error('Validation failed.');
+      throw new Error("Validation failed.");
     }
 
     // Create output directory if it doesn't exist
@@ -94,9 +109,11 @@ async function generateCalendar() {
       fs.writeFileSync(outputFilePath, JSON.stringify(value, null, 2));
     });
 
-    console.log('Created event json files successfully!');
+    console.log("Created event json files successfully!");
   } catch (error) {
-    console.error(`An error occurred during the post-build step: ${error.message}`);
+    console.error(
+      `An error occurred during the post-build step: ${error.message}`,
+    );
     process.exit(1);
   }
 }
