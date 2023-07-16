@@ -1,0 +1,10 @@
+{
+  "name": "muscat-tech.org",
+  "version": "1.0.0",
+  "description": "Muscat Tech community website",
+  "repository": "git@github.com:zidhuss/muscat-tech.org.git",
+  "author": "Hussein Al Abry <hussein@zidhuss.tech>",
+  "private": true,
+  "devDependencies": {
+  }
+}
