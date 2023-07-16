@@ -13,16 +13,27 @@
   }:
     flake-utils.lib.eachDefaultSystem (system: let
       pkgs = import nixpkgs {inherit system;};
+      yarnEnv = pkgs.mkYarnPackage {
+        src = ./.;
+      };
+      gitRev =
+        if (builtins.hasAttr "rev" self)
+        then self.shortRev
+        else "dirty";
     in {
       packages.default = pkgs.stdenv.mkDerivation {
-        name = "muscat-tech.org";
+        pname = "muscat-tech.org";
+        version = gitRev;
         src = ./.;
         buildInputs = [
           pkgs.hugo
-          pkgs.nodePackages.yarn
+          yarnEnv
+          pkgs.yarn
         ];
         buildPhase = ''
-          ${pkgs.hugo}/bin/hugo -v
+          ln -sf ${yarnEnv}/libexec/muscat-tech.org/node_modules node_modules
+          ${pkgs.yarn}/bin/yarn build
+          ${pkgs.hugo}/bin/hugo -F --minify --logLevel info
         '';
         installPhase = ''
           cp -r public $out
