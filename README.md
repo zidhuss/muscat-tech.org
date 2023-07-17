@@ -45,17 +45,15 @@ slug: meetup
 
 ### Building the Calendar
 
-Run `yarn build` to generate the calendar.
+Install the dependencies with `yarn` then run `yarn build` to generate the calendar.
 
 ### Running the Hugo Server
 
 You need to have `hugo` installed on your machine. To run the server, execute:
 
 ```sh
-hugo server -F --renderToDisk
+yarn dev
 ```
-
-**Note:** The `--renderToDisk` flag is necessary because Hugo needs to serve the outputs of the JS build script.
 
 ### Updating the Main Calendar
 
