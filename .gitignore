@@ -7,3 +7,5 @@
 /public
 /result
 node_modules
+
+resources/_gen
