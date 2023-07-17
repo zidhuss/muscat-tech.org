@@ -36,7 +36,8 @@
           ${pkgs.hugo}/bin/hugo -F --minify --logLevel info
         '';
         installPhase = ''
-          cp -r public $out
+          mkdir -p $out
+          cp -r public $out/public
         '';
       };
 

@@ -1,0 +1,41 @@
+name: Deploy changes
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+
+      - name: Set up Nix
+        uses: cachix/install-nix-action@v20
+
+      - name: Set up nix cache
+        uses: DeterminateSystems/magic-nix-cache-action@v1
+
+      - name: Build
+        run: |
+          nix build
+
+      - name: Deploy to Netlify
+        uses: nwtgck/actions-netlify@v2.0
+        with:
+          publish-dir: "./result/public"
+          production-branch: main
+          production-deploy: true
+          github-deployment-environment: production
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          deploy-message: "Deploy from GitHub Actions"
+          enable-pull-request-comment: false
+          enable-commit-comment: true
+          overwrites-pull-request-comment: true
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        timeout-minutes: 1
