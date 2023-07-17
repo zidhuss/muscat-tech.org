@@ -9,10 +9,25 @@
     "build": "node scripts/build.js"
   },
   "devDependencies": {
+    "@tailwindcss/typography": "^0.5.9",
     "gray-matter": "^4.0.3",
     "ical-generator": "^5.0.0",
+    "postcss-cli": "^10.1.0",
     "prettier": "^3.0.0",
     "prettier-plugin-go-template": "^0.0.13",
+    "tailwindcss": "^3.3.3",
     "yup": "^1.2.0"
+  },
+  "prettier": {
+    "overrides": [
+      {
+        "files": [
+          "*.html"
+        ],
+        "options": {
+          "parser": "go-template"
+        }
+      }
+    ]
   }
 }
