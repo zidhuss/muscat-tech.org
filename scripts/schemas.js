@@ -3,6 +3,10 @@ const yup = require("yup");
 const group = yup.object().shape({
   name: yup.string().required("Group name is a required field."),
   description: yup.string().required("Group description is a required field."),
+  type: yup
+    .string()
+    .oneOf(["group"])
+    .required('Type is required and must be "group".'),
   // Optional
   website: yup.string().url("Website must be a valid URL."),
   contactUrl: yup.string().url("Contact URL must be a valid URL."),
