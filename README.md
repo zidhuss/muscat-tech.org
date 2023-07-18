@@ -2,52 +2,39 @@
 
 A place for tech communities in Muscat to list their events.
 
-## Adding a new group
+## Adding a New Group
 
-1. Create a new subdirectory under `content/events` with the group name. For example, `content/events/Muscat Ruby`.
-2. Inside this new subdirectory, create a `_index.md` file with the following structure:
+You can add a new group either by using Hugo's built-in commands or by manually creating directories and files.
 
-```md
----
-name: OmanGo
-description: |
-  Meetup for people who know, use, or are just interested in starting to program in Go,
-  the programming language designed and built at Google. All abilities are welcome.
-email: hussein@omango.org
-organisers:
-  - name: Hussein Al Abry
-    email: hussein@zidhuss.tech
-    website: https://zidhuss.tech
-    mastodon: https://omani.social/@zidhuss
-    github: https://github.com/zidhuss
-    linkedin: https://www.linkedin.com/in/hussein-al-abry/
-where: Varies
-when: Third Wednesday of every month
-website: https://omango.org
-type: group
----
-```
+### Using Hugo
 
-## Adding a new event
+Run the following command in the terminal, replacing `<group-name>` with the name of the group:
 
-Create a new Markdown file in the group's directory. For example, `content/events/Muscat Ruby/meetup.md` with the following structure:
+    hugo new --kind group events/<group-name>
 
-```md
----
-name: "July meetup"
-description: "July meetup"
-date: "2023-07-26T19:00:00"
-endDate: "2023-07-26T23:00:00"
-detailsUrl: "https://omango.org"
-location: "Sorella"
-image: "https://omango.org/images/logo.svg"
-slug: meetup
----
-```
+This will create a new directory under `content/events/<group-name>` and a `_index.md` file within that directory with the predefined structure.
+
+### Manually
+
+Create a new subdirectory under `content/events` with the group name, for example, `content/events/Muscat Ruby`. Inside this new subdirectory, create a `_index.md` file. You can copy the template from `archetypes/group/_index.md` and fill in your group details.
+
+## Adding a New Event
+
+Similar to adding a new group, you can add a new event either by using Hugo's built-in commands or by manually creating a markdown file.
+
+### Using Hugo
+
+Run the following command in the terminal, replacing `<group-name>` with the name of the group and `<event-name>` with the name of the event:
+
+    hugo new --kind event events/<group-name>/<event-name>.md
+
+This will create a new Markdown file in the group's directory with the predefined structure.
+
+### Manually
+
+Create a new Markdown file in the group's directory, for example, `content/events/Muscat Ruby/meetup.md`. You can copy the template from `archetypes/event.md` and fill in your event details.
 
 **Note:** The `slug` field is optional. If not provided, the URL will be generated based on the file name.
-
-See [this file](./scripts/schemas.js) for the validation schema.
 
 ## For Developers
 
@@ -59,9 +46,7 @@ Install the dependencies with `yarn` then run `yarn build` to generate the calen
 
 You need to have `hugo` installed on your machine. To run the server, execute:
 
-```sh
-yarn dev
-```
+    yarn dev
 
 ### Updating the Main Calendar
 
