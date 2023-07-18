@@ -9,7 +9,6 @@ detailsUrl: "https://example.com"
 # Optional fields
 # promotionalImage: "URL of promotional image"
 # allDay: true or false
-# eventUrl: "URL of the event"
 # registrationUrl: "URL for event registration"
 # tags:
 #   - "Event tags"
