@@ -9,14 +9,21 @@ A place for tech communities in Muscat to list their events.
 
 ```md
 ---
+name: OmanGo
 description: |
-  Meetup for people who know, use, or are just interested in starting to program in Ruby.
-  All abilities are welcome.
-organiser: Hussein Al Abry
-email: hussein@zidhuss.tech
+  Meetup for people who know, use, or are just interested in starting to program in Go,
+  the programming language designed and built at Google. All abilities are welcome.
+email: hussein@omango.org
+organisers:
+  - name: Hussein Al Abry
+    email: hussein@zidhuss.tech
+    website: https://zidhuss.tech
+    mastodon: https://omani.social/@zidhuss
+    github: https://github.com/zidhuss
+    linkedin: https://www.linkedin.com/in/hussein-al-abry/
 where: Varies
-when: Once a month
-website: https://zidhuss.tech
+when: Third Wednesday of every month
+website: https://omango.org
 type: group
 ---
 ```
@@ -29,7 +36,6 @@ Create a new Markdown file in the group's directory. For example, `content/event
 ---
 name: "July meetup"
 description: "July meetup"
-organizer: "Muscat Ruby"
 date: "2023-07-26T19:00:00"
 endDate: "2023-07-26T23:00:00"
 detailsUrl: "https://omango.org"
@@ -40,6 +46,8 @@ slug: meetup
 ```
 
 **Note:** The `slug` field is optional. If not provided, the URL will be generated based on the file name.
+
+See [this file](./scripts/schemas.js) for the validation schema.
 
 ## For Developers
 
