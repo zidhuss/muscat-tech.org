@@ -43,7 +43,7 @@ async function generateCalendar() {
             const relativePath = path.relative(eventsDir, filePath);
 
             // Parse the event data
-            const eventData = { ...matter(fileContent).data, group };
+            const eventData = { ...matter(fileContent).data, group: groupData };
 
             // Extract the year and month from the event date
             const eventDate = new Date(eventData.date);
@@ -126,12 +126,13 @@ function icsEventGenerator(allEventsCalendar) {
     const eventObject = {
       start: new Date(eventData.date),
       end: new Date(eventData.endDate),
-      summary: `${eventData.group} - ${eventData.name}`,
+      summary: `${eventData.group.name} - ${eventData.name}`,
       description: eventData.description,
       location: eventData.location,
       url: eventData.detailsUrl,
       organizer: {
-        name: eventData.group,
+        name: eventData.group.name,
+        email: eventData.group.email,
       },
       class: "PUBLIC",
       id,
