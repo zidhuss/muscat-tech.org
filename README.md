@@ -10,7 +10,7 @@ You can add a new group either by using Hugo's built-in commands or by manually 
 
 Run the following command in the terminal, replacing `<group-name>` with the name of the group:
 
-    hugo new --kind group events/<group-name>
+    hugo new --kind group ./content/events/<group-name>
 
 This will create a new directory under `content/events/<group-name>` and a `_index.md` file within that directory with the predefined structure.
 
@@ -26,7 +26,7 @@ Similar to adding a new group, you can add a new event either by using Hugo's bu
 
 Run the following command in the terminal, replacing `<group-name>` with the name of the group and `<event-name>` with the name of the event:
 
-    hugo new --kind event events/<group-name>/<event-name>.md
+    hugo new --kind event ./content/events/<group-name>/<event-name>.md
 
 This will create a new Markdown file in the group's directory with the predefined structure.
 
