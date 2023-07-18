@@ -9,6 +9,17 @@ title = 'Muscat Tech'
   [permalinks.section]
     events = '/groups/:sections[last]/'
 
+[module]
+  [module.hugoVersion]
+    extended = false
+    min      = "0.112.0"
+  [[module.mounts]]
+    source = "assets"
+    target = "assets"
+  [[module.mounts]]
+    source = "hugo_stats.json"
+    target = "assets/watching/hugo_stats.json"
+
 [build]
   writeStats = true
   [[build.cachebusters]]
