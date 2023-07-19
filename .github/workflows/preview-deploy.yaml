@@ -30,6 +30,8 @@ jobs:
         uses: nwtgck/actions-netlify@v2.0
         with:
           publish-dir: "./result/public"
+          functions-dir: "./functions"
+          netlify-config-path: "./netlify.toml"
           github-token: ${{ secrets.GITHUB_TOKEN }}
           deploy-message: ${{ github.event.pull_request.title }}
           alias: deploy-preview-${{ github.event.number }}

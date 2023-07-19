@@ -1,0 +1,9 @@
+[functions]
+  # Sets a custom directory for Netlify Functions
+  directory = "functions/"
+
+  # Specifies `esbuild` for functions bundling
+  node_bundler = "esbuild"
+
+  # Flags "postmark" as an external node module for all functions
+  external_node_modules = ["postmark"]
