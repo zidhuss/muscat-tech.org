@@ -1,3 +1,45 @@
 {{ define "main" }}
-<main>Single group page /group/list</main>
+<div class="grid grid-cols-1 lg:grid-cols-5">
+    <div class="lg:col-start-2 lg:col-span-3 p-10">
+        <h1 class="font-bold text-4xl">{{ .Params.Name }}</h1>
+
+        <div class="py-1 flex flex-col text-gray-700 text-md content-style">
+            {{ with .Params.Where }}
+            <p>
+                <span>Location: {{ . }} </span>
+            </p>
+            {{ end }}
+
+            {{ with .Params.Website }}
+            <p>
+                <span>Website: {{ . }} </span>
+            </p>
+            {{ end }}
+
+            {{ with .Params.Email }}
+            <p>
+                <span>Email: {{ . }} </span>
+            </p>
+            {{ end }}
+        </div>
+
+        <h2 class="mt-2 font-semibold text-xl">About</h2>
+        <p class="py-1 content-style">{{ .Params.Description }}</p>
+
+        <h2 class="mt-2 font-semibold text-xl mb-2">Events</h2>
+        <div class="py-1">
+            {{ range .Data.Pages }}
+            <a class="flex flex-col p-3 border border-gray-300 rounded-lg h-32 mb-2 hover:shadow-md"
+                href="{{ .RelPermalink }}">
+                <p class="text-lg font-bold">{{ .Params.Name }} - {{ .Params.Location }}</p>
+                {{ with .Params.Date }}
+                <p class="content-style text-sm">{{ .Format "Jan 2, 2006 3:04PM" }}</p>
+                {{ end }}
+
+                <div class="px-2 pt-2 content-style text-sm line-clamp-2">{{ .Params.Description }}</div>
+            </a>
+            {{ end }}
+        </div>
+    </div>
+</div>
 {{ end }}

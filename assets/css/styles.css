@@ -11,3 +11,7 @@ html {
     font-size: 16px;
   }
 }
+
+.content-style {
+  @apply font-light text-gray-700;
+}
