@@ -5,7 +5,7 @@ description: "الجلسات مجانية ، الدعوة عامة للنساء 
 date: "2023-07-25T19:30:00+04:00"
 endDate: "2023-07-25T21:00:00+04:00"
 location: "Sorella Lounge"
-detailsUrl: "https://www.instagram.com/p/CurmBJCqK34/"
+detailsUrl: "https://www.instagram.com/p/CuWv_b7qHLq"
 # Optional fields
 #promotionalImage: "https://www.instagram.com/p/CurmBJCqK34/media/?size=l"
 # allDay: true or false
