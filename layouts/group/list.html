@@ -1,3 +1,51 @@
 {{ define "main" }}
-<main>Single group page /group/list</main>
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="max-w-3xl mx-auto divide-y-2 divide-gray-200 content">
+        <div class="pb-6">
+            <h1 class="font-extrabold text-4xl text-gray-900">{{ .Params.Name }}</h1>
+
+            <div class="py-1 flex flex-col text-gray-700">
+                {{ with .Params.Where }}
+                <p>
+                    <span>Location: {{ . }} </span>
+                </p>
+                {{ end }}
+
+                {{ with .Params.Website }}
+                <p>
+                    <span>Website: {{ . }} </span>
+                </p>
+                {{ end }}
+
+                {{ with .Params.Email }}
+                <p>
+                    <span>Email: {{ . }} </span>
+                </p>
+                {{ end }}
+            </div>
+        </div>
+
+        <div class="py-6">
+            <h2 class="font-bold text-2xl text-gray-900">About</h2>
+            <p class="py-1 text-xl">{{ .Params.Description }}</p>
+        </div>
+
+        <div class="py-6">
+            <h2 class="font-bold text-2xl mb-2 text-gray-900">Events</h2>
+            <div class="py-1">
+                {{ range .Data.Pages }}
+                <a class="flex flex-col p-3 border border-gray-300 rounded-lg max-h-36 mb-2 hover:shadow-sm"
+                    href="{{ .RelPermalink }}">
+                    <p class="text-lg font-semibold text-gray-900">{{ .Params.Name }} - {{ .Params.Location }}</p>
+                    {{ with .Params.Date }}
+                    <p>{{ .Format "Jan 2, 2006 3:04PM" }}</p>
+                    {{ end }}
+
+                    <div class="pt-4 line-clamp-2">{{ .Params.Description }}</div>
+                </a>
+                {{ end }}
+            </div>
+        </div>
+    </div>
+</main>
 {{ end }}
