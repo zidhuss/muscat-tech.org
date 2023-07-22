@@ -12,6 +12,6 @@ html {
   }
 }
 
-.content-style {
+.content {
   @apply font-light text-gray-700;
 }
