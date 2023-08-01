@@ -59,4 +59,9 @@
     {{ $styles = $styles | minify | fingerprint | resources.PostProcess }}
   {{ end }}
   <link href="{{ $styles.RelPermalink }}" rel="stylesheet" />
+
+  {{- if eq hugo.Environment "production" -}}
+    <script defer data-domain="muscat-tech.org" src="/js/script.js"></script>
+  {{- end -}}
+
 </head>
