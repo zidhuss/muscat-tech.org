@@ -1,3 +1,26 @@
 {{ define "main" }}
-<main>All group page /events/list</main>
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="max-w-3xl mx-auto divide-y-2 divide-gray-200 content">
+        <div class="pb-6">
+            <h1 class="font-extrabold text-4xl text-gray-900">Groups</h1>
+            <div class="py-1 text-gray-700">
+                <p>This is the list of all groups. To add a new group, refer to the <a
+                        href="https://github.com/zidhuss/muscat-tech.org#adding-a-new-group"
+                        class="text-indigo-600 hover:text-indigo-500">documentation</a>.</p>
+            </div>
+        </div>
+
+        <div class="py-6">
+            {{ range .Data.Pages }}
+            <a class="flex flex-col p-3 border border-gray-300 rounded-lg max-h-36 mb-2 hover:shadow-sm"
+                href="{{ .RelPermalink }}">
+                <p class="text-xl font-semibold text-gray-900">{{ .Params.Name }}</p>
+                <p>Location: {{ .Params.Where }}</p>
+
+                <div class="pt-4 line-clamp-2">{{ .Params.Description }}</div>
+            </a>
+            {{ end }}
+        </div>
+    </div>
+</main>
 {{ end }}
