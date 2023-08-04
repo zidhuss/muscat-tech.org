@@ -46,6 +46,14 @@ Create a new Markdown file in the group's directory, for example, `content/event
 
 ## For Developers
 
+### Requirements
+
+To run and contribute to the project, you will need to install the following requirements:
+
+1. [NodeJS](https://nodejs.org/en/download)
+2. [Yarn](https://classic.yarnpkg.com/lang/en/docs/install/#mac-stable)
+3. [Hugo](https://gohugo.io/installation/)
+
 ### Building the Calendar
 
 Install the dependencies with `yarn` then run `yarn build` to generate the calendar.
@@ -56,7 +64,7 @@ Before running the server, you need to install all required modules by running:
 
     yarn install
 
-You need to have `hugo` installed on your machine. To run the server, execute:
+To run the server, execute:
 
     yarn dev
 
