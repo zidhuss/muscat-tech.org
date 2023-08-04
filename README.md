@@ -56,7 +56,7 @@ Before running the server, you need to install all required modules by running:
 
     yarn install
 
-You need to have `hugo` installed on your machine. To run the server, execute:
+To run the server, execute:
 
     yarn dev
 
