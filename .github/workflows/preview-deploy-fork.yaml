@@ -1,7 +1,8 @@
-name: Trusted Preview Deployment
+name: Preview Deployment from Fork
 
 on:
-  pull_request:
+  pull_request_target:
+    types: [opened, synchronize, labeled, reopened]
 
 permissions:
   contents: read
@@ -9,14 +10,16 @@ permissions:
   pull-requests: write
 
 jobs:
-  build-and-deploy:
+  build:
     name: Build
     runs-on: ubuntu-latest
-    # Only run this workflow if PR is not from a fork
-    if: github.event.pull_request.head.repo.full_name == github.repository
+    # Only run this workflow if PR is from a fork
+    if: github.event.pull_request.head.repo.full_name != github.repository
     steps:
-      - name: checkout
+      - name: Checkout PR
         uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
 
       - name: Set up Nix
         uses: cachix/install-nix-action@v20
@@ -28,6 +31,13 @@ jobs:
         run: |
           nix build
 
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    # This workflow accesses secrets and checks out a PR, so only run if labelled
+    if: contains(github.event.pull_request.labels.*.name, 'preview')
+    needs: build
+    steps:
       - name: Deploy to Netlify
         uses: nwtgck/actions-netlify@v2.0
         with:
