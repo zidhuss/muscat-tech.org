@@ -31,6 +31,12 @@ jobs:
         run: |
           nix build
 
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-results
+          path: ./result/public
+
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
@@ -38,6 +44,12 @@ jobs:
     if: contains(github.event.pull_request.labels.*.name, 'preview')
     needs: build
     steps:
+      - name: Download build artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: build-results
+          path: ./result/public
+
       - name: Deploy to Netlify
         uses: nwtgck/actions-netlify@v2.0
         with:
