@@ -2,14 +2,6 @@
 
 A place for tech communities in Muscat to list their events.
 
-## Requirements
-
-To run and contribute to the project, you will need to install the following requirements:
-
-1. [NodeJS](https://nodejs.org/en/download)
-2. [Yarn](https://classic.yarnpkg.com/lang/en/docs/install/#mac-stable) _(Optional)_
-3. [Hugo](https://gohugo.io/installation/)
-
 ## Adding a New Group
 
 You can add a new group either by using Hugo's built-in commands or by manually creating directories and files.
@@ -45,6 +37,14 @@ Create a new Markdown file in the group's directory, for example, `content/event
 **Note:** The `slug` field is optional. If not provided, the URL will be generated based on the file name.
 
 ## For Developers
+
+### Requirements
+
+To run and contribute to the project, you will need to install the following requirements:
+
+1. [NodeJS](https://nodejs.org/en/download)
+2. [Yarn](https://classic.yarnpkg.com/lang/en/docs/install/#mac-stable)
+3. [Hugo](https://gohugo.io/installation/)
 
 ### Building the Calendar
 
