@@ -4,7 +4,7 @@
     <script src="/js/fullcalendar-daygrid.min.js"></script>
     <script type="module">
       // import
-      import eventsMonths from "/events/events.js";
+      import eventsMonths from "/events/months.js";
       document.addEventListener("DOMContentLoaded", function () {
         var calendarEl = document.getElementById("calendar");
         var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -25,7 +25,7 @@
               date.setMonth(date.getMonth() + 1)
             ) {
               var yearMonth = date.toISOString().slice(0, 7);
-              if (eventsMonths.includes(yearMonth)) {
+              if (eventsMonths.has(yearMonth)) {
                 promises.push(
                   fetch("/events/" + yearMonth + ".json")
                     .then((res) => res.json())
