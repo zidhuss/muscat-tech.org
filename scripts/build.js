@@ -100,6 +100,13 @@ async function generateCalendar() {
       fs.mkdirSync(outputDir, { recursive: true });
     }
 
+    // Create a new JSON file with an array of months that have events
+    const eventsFileOutputPath = path.join(outputDir, "events.json");
+    fs.writeFileSync(
+      eventsFileOutputPath,
+      JSON.stringify(Object.keys(events), null, 2)
+    );
+
     // Write the aggregated events data to JSON files
     Object.entries(events).forEach(([key, value]) => {
       const outputFilePath = path.join(outputDir, `${key}.json`);
