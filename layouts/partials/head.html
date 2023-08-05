@@ -15,33 +15,40 @@
             var startYearMonth = startStr.slice(0, 7);
             var endYearMonth = endStr.slice(0, 7);
 
-            // Prepare promises to fetch event data for all months in the range
-            var promises = [];
-            for (
-              var date = new Date(startYearMonth);
-              date <= new Date(endYearMonth);
-              date.setMonth(date.getMonth() + 1)
-            ) {
-              var yearMonth = date.toISOString().slice(0, 7);
-              promises.push(
-                fetch("/events/" + yearMonth + ".json")
-                  .then((res) => res.json())
-                  .catch(() => [])
-              );
-            }
+            // Fetch the months with events.
+            fetch("/events/events.json")
+              .then((res) => res.json())
+              .then((months) => {
+                // Prepare promises to fetch event data for all months in the range
+                var promises = [];
+                for (
+                  var date = new Date(startYearMonth);
+                  date <= new Date(endYearMonth);
+                  date.setMonth(date.getMonth() + 1)
+                ) {
+                  var yearMonth = date.toISOString().slice(0, 7);
+                  if (months.includes(yearMonth)) {
+                    promises.push(
+                      fetch("/events/" + yearMonth + ".json")
+                        .then((res) => res.json())
+                        .catch(() => [])
+                    );
+                  }
+                }
 
-            // Fetch all event data and flatten into a single array
-            Promise.all(promises)
-              .then((dataArrays) => dataArrays.flat())
-              .then((events) => {
-                // Transform events to FullCalendar Event Object format
-                var fullCalendarEvents = events.map((event) => ({
-                  title: `${event.group.name} - ${event.name}`,
-                  start: event.date,
-                  end: event.endDate,
-                  url: event.eventUrl,
-                }));
-                successCallback(fullCalendarEvents);
+                // Fetch all event data and flatten into a single array
+                Promise.all(promises)
+                  .then((dataArrays) => dataArrays.flat())
+                  .then((events) => {
+                    // Transform events to FullCalendar Event Object format
+                    var fullCalendarEvents = events.map((event) => ({
+                      title: `${event.group.name} - ${event.name}`,
+                      start: event.date,
+                      end: event.endDate,
+                      url: event.eventUrl,
+                    }));
+                    successCallback(fullCalendarEvents);
+                  });
               })
               .catch(failureCallback);
           },
