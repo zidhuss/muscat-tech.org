@@ -4,8 +4,7 @@
     <script src="/js/fullcalendar-daygrid.min.js"></script>
     <script type="module">
       // import
-      import eventsMonths from "/events/events.json" assert { type: "json" };
-
+      import eventsMonths from "/events/events.js";
       document.addEventListener("DOMContentLoaded", function () {
         var calendarEl = document.getElementById("calendar");
         var calendar = new FullCalendar.Calendar(calendarEl, {
