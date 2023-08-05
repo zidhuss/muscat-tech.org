@@ -2,7 +2,9 @@
   {{- if .IsHome -}}
     <script src="/js/fullcalendar.min.js"></script>
     <script src="/js/fullcalendar-daygrid.min.js"></script>
-    <script>
+    <script type="module">
+      // import
+      import eventsMonths from "/events/months.js";
       document.addEventListener("DOMContentLoaded", function () {
         var calendarEl = document.getElementById("calendar");
         var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -23,11 +25,13 @@
               date.setMonth(date.getMonth() + 1)
             ) {
               var yearMonth = date.toISOString().slice(0, 7);
-              promises.push(
-                fetch("/events/" + yearMonth + ".json")
-                  .then((res) => res.json())
-                  .catch(() => [])
-              );
+              if (eventsMonths.has(yearMonth)) {
+                promises.push(
+                  fetch("/events/" + yearMonth + ".json")
+                    .then((res) => res.json())
+                    .catch(() => [])
+                );
+              }
             }
 
             // Fetch all event data and flatten into a single array
