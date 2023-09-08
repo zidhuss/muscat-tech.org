@@ -7,7 +7,7 @@ endDate: "2023-11-04T23:00:00+04:00"
 location: "Fraser Suites Muscat"
 detailsUrl: "https://makeen.gov.om/sas48En"
 # Optional fields
-promotionalImage: "https://eqp.datamining.om//SurveyFiles/6593/content/upload/SAS.PNG"
+promotionalImage: "https://eqp.datamining.om/SurveyFiles/6593/content/upload/SAS.png"
 # allDay: true or false
 registrationUrl: "https://eqp.datamining.om/estebyan/Sas48"
 tags:
